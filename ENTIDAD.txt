@@ -1,0 +1,14 @@
+Install-Package EntityFramework -Version 6.1.3
+
+
+	public int codigo_solicitud_personal_administrativo { get; set; }   
+        public string motivo_vacante { get; set; }
+        public Nullable<decimal> remuneracion { get; set; }
+        public Nullable<decimal> variable { get; set; }
+        public string numero_requerimiento { get; set; }
+        public string observacion { get; set; }
+        public byte[] archivo_sustento { get; set; }    
+        public string estado { get; set; }
+        public bool habilitado { get; set; }
+        public Nullable<int> codigo_usuario_asignado { get; set; }
+        public Nullable<bool> edicion { get; set; }

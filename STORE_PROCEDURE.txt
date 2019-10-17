@@ -1,0 +1,64 @@
+CREATE PROCEDURE sp_obtener_programa_wk  
+@codigo_programa INT  
+AS  
+BEGIN  
+SELECT * FROM dbo.Programa WHERE codigo_programa=@codigo_programa  
+END  
+GO
+
+CREATE PROCEDURE sp_listar_programa_filtros
+@codigo_programa INT,
+@descripcion_programa VARCHAR(50),
+@lista_codigo VARCHAR(100),
+@fecha_desde VARCHAR(20),
+@fecha_hasta VARCHAR(20)
+AS
+BEGIN
+DECLARE @sentencia NVARCHAR(MAX)                  
+SET @sentencia = 'SELECT * FROM PROGRAMA WHERE habilitado = 1'                
+             
+IF @codigo_programa = '' AND @descripcion_programa = '' AND @lista_codigo = ''  BEGIN                   
+  SET  @sentencia = @sentencia  + 'AND fecha_creacion_registro BETWEEN'''+ @fecha_desde + '''AND'''+ @fecha_hasta + ''''     
+END                
+ELSE IF @codigo_programa = '' AND @descripcion_programa <> '' AND @lista_codigo = ''   BEGIN                  
+  SET  @sentencia = @sentencia  + 'AND fecha_creacion_registro BETWEEN'''+ @fecha_desde + '''AND'''+ @fecha_hasta + ''' AND descripcion_programa like ''%'+ @descripcion_programa +'%'''                 
+END                
+ELSE IF @codigo_programa = '' AND @descripcion_programa <> '' AND @lista_codigo <> '' BEGIN                
+ SET  @sentencia = @sentencia + 'AND fecha_creacion_registro BETWEEN'''+ @fecha_desde + '''AND'''+ @fecha_hasta + ''' AND descripcion_programa like ''%'+ @descripcion_programa +'%'' AND lista_codigo_servicio_plataforma like ''%'+ @descripcion_programa +'%'''          
+END     
+ELSE IF @codigo_programa <> '' AND @descripcion_programa = '' AND @lista_codigo = ''  BEGIN                
+ SET  @sentencia = @sentencia + 'AND codigo_programa ='''+ @codigo_programa + ''''                
+END                  
+                
+PRINT @sentencia                
+                
+EXEC sp_executesql @sentencia                
+                
+END
+GO
+
+CREATE PROCEDURE sp_insertar_programa
+@descripcion_programa VARCHAR(50),
+@lista_codigo VARCHAR(100)
+AS  
+BEGIN  
+INSERT INTO dbo.Programa ( descripcion_programa ,lista_codigo_servicio_plataforma ,fecha_creacion_registro ,habilitado )
+VALUES (@descripcion_programa , @lista_codigo ,GETDATE() , 1        
+    ) 
+END  
+GO
+
+CREATE PROCEDURE sp_actualizar_programa
+@codigo_programa INT,
+@descripcion_programa VARCHAR(50),
+@lista_codigo VARCHAR(100)
+AS  
+BEGIN  
+UPDATE dbo.Programa 
+SET descripcion_programa=@descripcion_programa,
+lista_codigo_servicio_plataforma=@lista_codigo ,
+fecha_creacion_registro =GETDATE(), 
+habilitado = 1
+WHERE codigo_programa=@codigo_programa
+END  
+GO

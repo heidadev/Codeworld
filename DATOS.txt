@@ -1,0 +1,151 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Entidad;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+
+
+
+ public int Validar_Programa(string nro_rq)
+        {
+            using (var bd = new BDApp_Oncosalud_GsysEntities())
+            {
+                try
+                {
+                    var result = bd.Programa.
+                        Where(x => x.habilitado == true).Count();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public ProgramaEN Obtener_Programa(int codigo_programa)
+        {
+            using (var bd = new BDApp_Oncosalud_GsysEntities())
+            {
+                try
+                {
+                    var result = bd.Database.SqlQuery<ProgramaEN>("sp_obtener_programa_wk @codigo_programa",
+                        new SqlParameter("@codigo_programa", codigo_programa)).SingleOrDefault();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public List<ProgramaEN> Listar_Programa_Filtros(int codigo_programa, string descripcion_programa, string lista_codigo, string fecha_desde, string fecha_hasta)
+        {
+            using (var bd = new BDApp_Oncosalud_GsysEntities())
+            {
+                try
+                {
+                    var result = bd.Database.SqlQuery<ProgramaEN>("sp_listar_programa_filtros @codigo_programa,@descripcion_programa,@lista_codigo,@fecha_desde,@fecha_hasta",
+                        new SqlParameter("@codigo_programa", codigo_programa),
+                        new SqlParameter("@descripcion_programa", descripcion_programa),
+                        new SqlParameter("@lista_codigo", lista_codigo),
+                        new SqlParameter("@fecha_desde", fecha_desde),
+                        new SqlParameter("@fecha_hasta", fecha_hasta)).ToList();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public int Insertar_Nuevo_programa(ProgramaEN objPrograma)
+        {
+            var result = 0;
+            using (var bd = new BDApp_Oncosalud_GsysEntities())
+            {
+                using (var bdTrans = bd.Database.BeginTransaction())
+                {
+                    int codigo_solicitud = 0;
+
+                    try
+                    {
+                        codigo_solicitud = bd.Database.SqlQuery<int>("sp_insertar_programa @descripcion_programa,@lista_codigo_servicio_plataforma",
+                                         new SqlParameter("@descripcion_programa", objPrograma.descripcion_programa),
+                                          new SqlParameter("@lista_codigo_servicio_plataforma", objPrograma.lista_codigo_servicio_plataforma)).SingleOrDefault();
+
+                        //if (codigo_solicitud > 0)
+                        //{
+                        //    foreach (var itemHistorial in objSPEjecutivo.Historial_Solicitud_Personal_Ejecutivo_NV)
+                        //    {
+                        //        bd.Database.ExecuteSqlCommand("sccp_sp_insertar_historial_solicitud_personal_operativo @codigo_solicitud_personal_ejecutivo,@codigo_usuario_asignado,@codigo_cargo_usuario_asignado,@estado",
+                        //                    new SqlParameter("@codigo_solicitud_personal_ejecutivo", codigo_solicitud),
+                        //                    new SqlParameter("@codigo_usuario_asignado", itemHistorial.codigo_usuario_asignado),
+                        //                    new SqlParameter("@codigo_cargo_usuario_asignado", itemHistorial.codigo_cargo_usuario_asignado),
+                        //                    new SqlParameter("@estado", itemHistorial.estado));
+                        //    }
+
+                        //    bdTrans.Commit();
+                        //    result = codigo_solicitud;
+                        //}
+                        //else
+                        //{
+                        //    bdTrans.Rollback();
+                        //    result = codigo_solicitud;
+                        //}
+
+
+                        bdTrans.Commit();
+                        result = codigo_solicitud;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        try
+                        {
+                            bdTrans.Rollback();
+                        }
+                        catch (Exception exRollback)
+                        {
+                            Console.WriteLine(exRollback.Message);
+                        }
+
+                        throw;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public bool Actualizar_Programa(ProgramaEN objProgramaEN)
+        {
+            var result = false;
+            using (var bd = new BDApp_Oncosalud_GsysEntities())
+            {
+                using (var bdTrans = bd.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        bd.Database.ExecuteSqlCommand("sp_actualizar_programa @codigo_programa,@descripcion_programa," +
+                        "@lista_codigo",
+                        new SqlParameter("@codigo_programa", objProgramaEN.codigo_programa),
+                        new SqlParameter("@descripcion_programa", objProgramaEN.descripcion_programa),
+                        new SqlParameter("@lista_codigo", objProgramaEN.lista_codigo_servicio_plataforma));
+
+                        bdTrans.Commit();
+                        result = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        bdTrans.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            return result;
+        }   

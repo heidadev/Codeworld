@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Datos;
+using Entidad;
+
+
+
+ 	public int Validar_Programa(string nro_rq)
+        {
+            return new ProgramaDA().Validar_Programa(nro_rq);
+        }
+
+        public ProgramaEN Obtener_Programa(int codigo_programa)
+        {
+            return new ProgramaDA().Obtener_Programa(codigo_programa);
+        }
+
+        public List<ProgramaEN> Listar_Programa_Filtros(int codigo_programa, string descripcion_programa, string lista_codigo, string fecha_desde, string fecha_hasta)
+        {
+            return new ProgramaDA().Listar_Programa_Filtros(codigo_programa, descripcion_programa, lista_codigo, fecha_desde, fecha_hasta);
+        }
+
+        public int Insertar_Nuevo_programa(ProgramaEN objPrograma)
+        {
+            return new ProgramaDA().Insertar_Nuevo_programa(objPrograma);
+        }
+        public bool Actualizar_Programa(ProgramaEN objPrograma)
+        {
+            return new ProgramaDA().Actualizar_Programa(objPrograma);
+        }

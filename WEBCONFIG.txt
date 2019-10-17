@@ -1,0 +1,17 @@
+<entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="mssqllocaldb" />
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+  <connectionStrings>
+    <!--Desarrollo-->
+    <!--<add name="BDWeb_Gestion_RRHHEntities" connectionString="metadata=res://*/BDWeb_Gestion_RRHH.csdl|res://*/BDWeb_Gestion_RRHH.ssdl|res://*/BDWeb_Gestion_RRHH.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=SCCDEV02;initial catalog=BDWeb_Gestion_RRHH;user id=dev_pachecoe;password=p@cheC0e.dev;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />-->    
+    <!--Produccion-->
+    <add name="BDWeb_Gestion_RRHHEntities" connectionString="metadata=res://*/BDWeb_Gestion_RRHH.csdl|res://*/BDWeb_Gestion_RRHH.ssdl|res://*/BDWeb_Gestion_RRHH.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=10.77.243.98;initial catalog=BDWeb_Gestion_RRHH;user id=usuario_web_gestion_rrhh;password=U5u4r10_g3St1oN_rR4H;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <!--<add name="BDWeb_Seguimiento_Solicitud_PersonalEntities" connectionString="metadata=res://*/BDWeb_Seguimiento_Solicitud_Personal.csdl|res://*/BDWeb_Seguimiento_Solicitud_Personal.ssdl|res://*/BDWeb_Seguimiento_Solicitud_Personal.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=10.77.243.98;initial catalog=BDWeb_Seguimiento_Solicitud_Personal;user id=sa;password=Servicios2009;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />-->   
+ </connectionStrings>
