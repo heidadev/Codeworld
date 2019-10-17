@@ -1,9 +1,0 @@
-**MATEMÁTICA: 
--2 TAREAS (SUMWEB 29/09/2019) (INVERSA Y DETERMINANTE)
--1 FORO(LAURASSIA 26/09/2019)
-De la lectura: Evolución Histórica del Concepto de Matriz, presente cuatro conclusiones
--2 TAREAS LAURASSIA 18/09/2019) (INVERSA Y DETERMINANTE)
-**INTRODUCCION SISTEMAS : 
--2 TAREAS (LAURASSIA 17/09/2019 y 21/09/2019) (excel del metodo de transporte y  ¿Qué son los sistemas blandos? - ERP)
--1 FORO: (LAURASSIA 21/09/2019)
-En que lenguajes de programación cree usted que se desarrollan y mantienen los sistemas en empresas: a. medias b. grandes sustente fundamento
